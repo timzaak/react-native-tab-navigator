@@ -23,14 +23,12 @@ export default class TabNavigator extends React.Component {
     isVisible: PropTypes.bool,
     isFullScreen: PropTypes.bool,
   };
+  static defaultProps = {
+    isVisible : true,
+    isFullScreen : false,
 
+  }
   constructor(props, context) {
-    if(!("isVisible" in props)){
-      props.isVisible = true
-    }
-    if(!("isFullScreen" in props)){
-      props.isFullScreen = false
-    }
     super(props, context);
     this.state = {
       renderedSceneKeys: this._updateRenderedSceneKeys(props.children),
