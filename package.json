@@ -1,6 +1,6 @@
 {
   "name": "react-native-tab-navigator",
-  "version": "0.2.7",
+  "version": "0.2.9",
   "description": "A tab bar that switches between scenes, written in JS for cross-platform support",
   "main": "TabNavigator.js",
   "repository": {
@@ -10,7 +10,9 @@
   "keywords": [
     "react-native",
     "tab-bar",
-    "navigator"
+    "navigator",
+    "ios",
+    "android"
   ],
   "author": "James Ide",
   "license": "MIT",
