@@ -75,13 +75,11 @@ export default class TabNavigator extends React.Component {
         <SceneContainer key={sceneKey} selected={selected} style={sceneStyle} isFullScreen={!isVisible||isFullScreen}>
           {item}
         </SceneContainer>;
-
       scenes.push(scene);
     });
     let tabBarView = isVisible ? (
         <TabBar style={tabBarStyle}>
           <View {...props} style={[styles.container, style]}>
-            {scenes}
             <TabBar style={tabBarStyle} shadowStyle={tabBarShadowStyle}>
               {React.Children.map(children, this._renderTab)}
             </TabBar>
