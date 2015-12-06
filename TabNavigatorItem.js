@@ -1,22 +1,26 @@
 'use strict';
 
-import React from 'react-native';
-let {
+import React, {
   Text,
   PropTypes,
-} = React;
+  View,
+} from 'react-native';
 
 export default class TabNavigatorItem extends React.Component {
   static propTypes = {
     renderIcon: PropTypes.func.isRequired,
     renderSelectedIcon: PropTypes.func,
-    badgeText: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
+    badgeText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     renderBadge: PropTypes.func,
     title: PropTypes.string,
     titleStyle: Text.propTypes.style,
     selectedTitleStyle: Text.propTypes.style,
     selected: PropTypes.bool,
     onPress: PropTypes.func,
+  };
+
+  static defaultProps = {
+    renderIcon: () => <View />,
   };
 
   render() {

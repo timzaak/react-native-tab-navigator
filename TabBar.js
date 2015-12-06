@@ -1,22 +1,24 @@
 'use strict';
 
-import React from 'react-native';
-let {
+import React, {
   Platform,
   StyleSheet,
   View,
-} = React;
+} from 'react-native';
 
 import Layout from './Layout';
 
 export default class TabBar extends React.Component {
-  static propTypes = View.propTypes;
+  static propTypes = {
+    ...View.propTypes,
+    shadowStyle: View.propTypes.style,
+  }
 
   render() {
     return (
       <View {...this.props} style={[styles.container, this.props.style]}>
         {this.props.children}
-        <View style={styles.shadow} />
+        <View style={[styles.shadow, this.props.shadowStyle]} />
       </View>
     );
   }

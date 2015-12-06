@@ -1,12 +1,11 @@
 'use strict';
 
 import { Set } from 'immutable';
-import React from 'react-native';
-let {
+import React, {
   PropTypes,
   StyleSheet,
   View,
-} = React;
+} from 'react-native';
 
 import Badge from './Badge';
 import Layout from './Layout';
@@ -22,6 +21,8 @@ export default class TabNavigator extends React.Component {
     tabBarStyle: TabBar.propTypes.style,
     isVisible: PropTypes.bool,
     isFullScreen: PropTypes.bool,
+    tabBarShadowStyle: TabBar.propTypes.shadowStyle,
+    hidesTabTouch: PropTypes.bool
   };
 
   constructor(props, context) {
@@ -35,6 +36,8 @@ export default class TabNavigator extends React.Component {
     this.state = {
       renderedSceneKeys: this._updateRenderedSceneKeys(props.children),
     };
+
+    this._renderTab = this._renderTab.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -63,7 +66,7 @@ export default class TabNavigator extends React.Component {
   }
 
   render() {
-    let { style, isVisible, isFullScreen, children, tabBarStyle, sceneStyle, ...props } = this.props;
+    let { style, isVisible, isFullScreen, children, tabBarStyle, sceneStyle,tabBarShadowStyle, ...props } = this.props;
     let scenes = [];
 
     React.Children.forEach(children, (item, index) => {
@@ -80,8 +83,9 @@ export default class TabNavigator extends React.Component {
 
       scenes.push(scene);
     });
+
     let tabBarView = isVisible ? (
-        <TabBar style={tabBarStyle}>
+        <TabBar style={tabBarStyle} shadowStyle={tabBarShadowStyle}>
           {React.Children.map(children, this._renderTab)}
         </TabBar>
       ): null
@@ -126,7 +130,8 @@ export default class TabNavigator extends React.Component {
           ] : null,
         ]}
         badge={badge}
-        onPress={item.props.onPress}>
+        onPress={item.props.onPress}
+        hidesTabTouch={this.props.hidesTabTouch}>
         {icon}
       </Tab>
     );

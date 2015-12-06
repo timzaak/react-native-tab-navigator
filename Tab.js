@@ -1,15 +1,12 @@
 'use strict';
 
-import React from 'react-native';
-let {
+import React, {
   PropTypes,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-} = React;
-
-import autobind from 'autobind-decorator';
+} from 'react-native';
 
 import Layout from './Layout';
 
@@ -19,7 +16,14 @@ export default class Tab extends React.Component {
     titleStyle: Text.propTypes.style,
     badge: PropTypes.element,
     onPress: PropTypes.func,
+    hidesTabTouch: PropTypes.bool
   };
+
+  constructor(props, context) {
+    super(props, context);
+
+    this._handlePress = this._handlePress.bind(this);
+  }
 
   render() {
     let { title, badge } = this.props;
@@ -36,14 +40,14 @@ export default class Tab extends React.Component {
 
     if (badge) {
       badge = React.cloneElement(badge, {
-        style: [styles.badge, badge.style],
+        style: [styles.badge, badge.props.style],
       });
     }
 
     let tabStyle = [styles.container, title ? null : styles.untitledContainer];
     return (
       <TouchableOpacity
-        activeOpacity={0.8}
+        activeOpacity={this.props.hidesTabTouch ? 1.0 : 0.8}
         onPress={this._handlePress}
         style={tabStyle}>
         <View>
@@ -55,7 +59,6 @@ export default class Tab extends React.Component {
     );
   }
 
-  @autobind
   _handlePress(event) {
     if (this.props.onPress) {
       this.props.onPress(event);
