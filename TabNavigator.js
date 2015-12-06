@@ -1,12 +1,11 @@
 'use strict';
 
 import { Set } from 'immutable';
-import React from 'react-native';
-let {
+import React, {
   PropTypes,
   StyleSheet,
   View,
-} = React;
+} from 'react-native';
 
 import Badge from './Badge';
 import Layout from './Layout';
@@ -20,6 +19,8 @@ export default class TabNavigator extends React.Component {
     ...View.propTypes,
     sceneStyle: View.propTypes.style,
     tabBarStyle: TabBar.propTypes.style,
+    tabBarShadowStyle: TabBar.propTypes.shadowStyle,
+    hidesTabTouch: PropTypes.bool
   };
 
   constructor(props, context) {
@@ -27,6 +28,8 @@ export default class TabNavigator extends React.Component {
     this.state = {
       renderedSceneKeys: this._updateRenderedSceneKeys(props.children),
     };
+
+    this._renderTab = this._renderTab.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,7 +58,7 @@ export default class TabNavigator extends React.Component {
   }
 
   render() {
-    let { style, children, tabBarStyle, sceneStyle, ...props } = this.props;
+    let { style, children, tabBarStyle, tabBarShadowStyle, sceneStyle, ...props } = this.props;
     let scenes = [];
 
     React.Children.forEach(children, (item, index) => {
@@ -76,7 +79,7 @@ export default class TabNavigator extends React.Component {
     return (
       <View {...props} style={[styles.container, style]}>
         {scenes}
-        <TabBar style={tabBarStyle}>
+        <TabBar style={tabBarStyle} shadowStyle={tabBarShadowStyle}>
           {React.Children.map(children, this._renderTab)}
         </TabBar>
       </View>
@@ -116,7 +119,8 @@ export default class TabNavigator extends React.Component {
           ] : null,
         ]}
         badge={badge}
-        onPress={item.props.onPress}>
+        onPress={item.props.onPress}
+        hidesTabTouch={this.props.hidesTabTouch}>
         {icon}
       </Tab>
     );
