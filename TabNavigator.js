@@ -24,14 +24,12 @@ export default class TabNavigator extends React.Component {
     tabBarShadowStyle: TabBar.propTypes.shadowStyle,
     hidesTabTouch: PropTypes.bool
   };
+  static defaultProps = {
+    isVisible : true,
+    isFullScreen : false,
 
+  }
   constructor(props, context) {
-    if(!("isVisible" in props)){
-      props.isVisible = true
-    }
-    if(!("isFullScreen" in props)){
-      props.isFullScreen = false
-    }
     super(props, context);
     this.state = {
       renderedSceneKeys: this._updateRenderedSceneKeys(props.children),
@@ -80,7 +78,6 @@ export default class TabNavigator extends React.Component {
         <SceneContainer key={sceneKey} selected={selected} style={sceneStyle} isFullScreen={!isVisible||isFullScreen}>
           {item}
         </SceneContainer>;
-
       scenes.push(scene);
     });
 
