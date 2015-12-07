@@ -20,6 +20,7 @@ export default class TabNavigator extends React.Component {
     sceneStyle: View.propTypes.style,
     tabBarStyle: TabBar.propTypes.style,
     tabBarShadowStyle: TabBar.propTypes.shadowStyle,
+    hidesTabTouch: PropTypes.bool
   };
 
   constructor(props, context) {
@@ -27,6 +28,8 @@ export default class TabNavigator extends React.Component {
     this.state = {
       renderedSceneKeys: this._updateRenderedSceneKeys(props.children),
     };
+
+    this._renderTab = this._renderTab.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -116,7 +119,8 @@ export default class TabNavigator extends React.Component {
           ] : null,
         ]}
         badge={badge}
-        onPress={item.props.onPress}>
+        onPress={item.props.onPress}
+        hidesTabTouch={this.props.hidesTabTouch}>
         {icon}
       </Tab>
     );
